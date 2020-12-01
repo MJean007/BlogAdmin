@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewData["Title"] = "Home";
+}
+@*<link rel="stylesheet" href="../css/bootstrap.css">*@
+<script src="~/js/bootstrap.js"></script>
+
+<link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.css/bootstrap.min.css" />
+<link rel="stylesheet" href="bootstrap.css" />
+<script src="~/js/bootstrap.js"></script>
+
+<h1>Blog</h1>
+<hr>
+<div class="container">
+    <p>&nbsp;</p>
+    <div class="row border border-danger">
+        <div class="col-xs-6 border border-primary">
+            <label class="header">Categories</label>
+        </div>
+        <div class="col-xs-6">
+            <input type="button" value="Add" class="btn btn-primary" onclick="location.href='@Url.Action("Index", "Category")'"></>
+        </div>
+    </div>
+    <div class="row">
+        liste de categories
+    </div>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <div class="row">
+        <div class="col-xs-6">
+            <label class="header">Posts</label>
+        </div>
+        <div class="col-xs-6">
+            <button class="btn btn-primary">Add</button>
+        </div>
+    </div>
+    <div class="row">
+        liste de posts
+    </div>
+</div>
+
+

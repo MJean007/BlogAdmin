@@ -20,7 +20,10 @@ namespace BlogAdmin.Controllers
 
         public IActionResult Home()
         {
-            return View();
+
+            var model = new MainPageData();
+
+            return View(model);
         }
 
         public IActionResult Privacy()

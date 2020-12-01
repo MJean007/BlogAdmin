@@ -7,28 +7,25 @@
 <h1>Add Category</h1>
 
 <hr>
-<div class="container">
-    @using (Html.BeginForm("Add", "Category", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-    {
+@using (Html.BeginForm("Add", "Category", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <div class="container">
+
         <div class="row">
-            <div class="col-xs-6">
-                @Html.LabelFor(model => model.title)
+            <div class="col-xs-6 headercol">
+               <h3>Title</h3>
             </div>
             <div class="col-xs-6">
                 @Html.TextBoxFor(model => model.title)
             </div>
         </div>
-<div class="row">
-    <div class="col-xs-4">
-        <input type="submit" value="Save" name="Save" />
+        <div class="row">
+            <div class="col-xs-4">
+                <input type="submit" class="btn btn-primary" value="Save" name="Save" />
+            </div>
+            <div class="col-xs-8">
+                &nbsp;
+            </div>
+        </div>
     </div>
-    <div class="col-xs-8">
-        &nbsp;
-    </div>
-</div>
-
-      
-    
-    };
-
-</div>
+}

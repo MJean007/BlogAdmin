@@ -63,8 +63,8 @@ namespace BlogAdmin.Controllers
             return View("~/Views/Home/Home.cshtml");
         }
 
-
-        public async Task<IActionResult> SaveCategory(Models.Category model)
+        [HttpPost]
+        public async Task<IActionResult> SaveCategory(Category model)
         {
             int id = 0;
             try
@@ -87,7 +87,7 @@ namespace BlogAdmin.Controllers
                         }
 
                     }
-                // return the id of that category created
+                // return the id of the category that was created
                 return _context.Category.Where(t => t.title == model.title).Select(c => c.categoryID).FirstOrDefault();
                 }
                 );

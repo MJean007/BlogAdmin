@@ -45,7 +45,7 @@
                 <h2>Posts</h2>
             </div>
             <div class="col-xs-4">
-                <button class="btn btn-primary">Add</button>
+                <input type="button" value="Add" class="btn btn-primary" onclick="location.href='@Url.Action("Index", "Post")'"></>
             </div>
         </div>
         <div class="row">
@@ -53,7 +53,7 @@
             {
                 <div class="row">
                     <div class="col-xs-10">
-                        <a href="">@item.title</a>
+                        <a href="@Url.Action("Edit", "Post" , item)">@item.title</a>
                     </div>
 
                 </div>

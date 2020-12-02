@@ -1,0 +1,62 @@
+@model BlogAdmin.Models.post
+
+<h1>Add Post</h1>
+
+<hr>
+@using (Html.BeginForm("Add", "Post", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+
+    <div class="row border border-primary">
+        <div class="col-xs4">
+            <p>Title</p>
+        </div>
+        <div class="col-xs-8">
+            @Html.TextBoxFor(model => model.title)
+        </div>
+    </div>
+
+    <div class="row border border-primary">
+        <div class="col-xs4 border border-primary">
+            <p>Category:</p>
+        </div>
+        <div class="col-xs-8 border border-primary">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Select
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+                @foreach (var item in ViewBag.ListOfCategories)
+                {
+                    <li class="dropdown-item">@item.title</li>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs4">
+            Publication Date
+        </div>
+        <div class="col-xs-8">
+            @Html.TextBoxFor(model => model.publicationDate)
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            Content
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            @Html.TextBoxFor(model => model.content)
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4">
+            <input type="submit" class="btn btn-primary" value="Save" name="Save" />
+        </div>
+        <div class="col-xs-8">
+            &nbsp;
+        </div>
+    </div>
+}

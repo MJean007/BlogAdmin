@@ -1,7 +1,31 @@
 ﻿
 @{
-    ViewData["Title"] = "EditCategory";
+    ViewData["Title"] = "Edit Category";
 }
+@model BlogAdmin.Models.Category
 
-<h1>EditCategory</h1>
+<h1>@ViewBag.Title</h1>
 
+<hr>
+@using (Html.BeginForm("SaveCategory", "Category", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <div class="container">
+
+        <div class="row">
+            <div class="col-xs-6 headercol">
+                <h3>Title</h3>
+            </div>
+            <div class="col-xs-6">
+                @Html.TextBoxFor(model => model.title)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4">
+                <input type="submit" class="btn btn-primary" value="Save" name="Save" />
+            </div>
+            <div class="col-xs-8">
+                &nbsp;
+            </div>
+        </div>
+    </div>
+}

@@ -8,6 +8,6 @@ namespace BlogAdmin.Models
     public class Category
     {
         public string title { get; set; }
-        public int categoryID { get; }
+        public int categoryID { get; set; }
     }
 }

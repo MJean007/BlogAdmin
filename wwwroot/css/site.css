@@ -15,18 +15,26 @@
 #postcolTitle {
     /*border: solid;
     position: relative;
-    right: 50px;*/
+    right: 50px;
+    border: solid;*/
     width: 300px;
 }
 
 #postcolCat {
     /*position: relative;
-    right: 20px;*/
+    right: 20px;
+    border: solid;*/
     width: 300px;
 }
 
 #postcolPubDate {
     /*position: relative;
-    right: 130px;*/
+    right: 130px;
+    border: solid;*/
     width: 300px;
+}
+
+#ContentTextArea {
+    width:inherit;
+    height: 200px;
 }

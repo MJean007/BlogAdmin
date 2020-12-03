@@ -1,0 +1,60 @@
+@model BlogAdmin.Models.post
+
+<h3>Edit Post</h3>
+
+<hr>
+@using (Html.BeginForm("Edit", "Post", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+
+    <div class="row">
+        <div name="postcolTitle" class="col-xs4 rowLabelHeader">
+            <p>Title</p>
+        </div>
+        <div class="col-sm-8 rowLabelHeader">
+            @Html.TextBoxFor(model => model.title)
+        </div>
+    </div>
+
+    <div class="row">
+        <div id="postcolCat" class="col-xs4  ">
+            <p>Category:</p>
+        </div>
+        <div class="col-sm-8 rowLabelHeader">
+            @Html.DropDownList("listCategories", new SelectList(ViewBag.ListOfCategories, "categoryID", "title"))
+        </div>
+    </div>
+    <div class="row">
+        <div id="postcolPubDate" class="col-xs4 ">
+            Publication Date
+        </div>
+        <div class="col-sm-8 rowLabelHeader">
+            @Html.TextBoxFor(model => model.publicationDate)
+        </div>
+    </div>
+
+    <div class="row ">
+        <div class="col-sm-12">
+            Content
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+
+            @Html.TextAreaFor(model => model.content, new { id = "ContentTextArea", @class = "  control-label  LabelGroupBy" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            &nbsp;
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <input type="submit" class="btn btn-primary" value="Save" name="Save" />
+        </div>
+        <div class="col-sm-8">
+            &nbsp;
+        </div>
+    </div>
+}

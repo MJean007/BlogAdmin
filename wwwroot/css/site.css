@@ -4,3 +4,29 @@
     padding-right: 40px;
     padding-bottom: 30px;
 }
+
+.rowLabelHeader {
+    /*position: relative;
+    left: 130px;*/
+    width: 300px;
+}
+
+
+#postcolTitle {
+    /*border: solid;
+    position: relative;
+    right: 50px;*/
+    width: 300px;
+}
+
+#postcolCat {
+    /*position: relative;
+    right: 20px;*/
+    width: 300px;
+}
+
+#postcolPubDate {
+    /*position: relative;
+    right: 130px;*/
+    width: 300px;
+}

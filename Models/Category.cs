@@ -9,5 +9,18 @@ namespace BlogAdmin.Models
     {
         public string title { get; set; }
         public int categoryID { get; set; }
+        public Category()
+        {
+
+        }
+
+
+        public Category(int _catID, string _title)
+        {
+            categoryID = _catID;
+            title = _title;
+        }
+
+
     }
 }

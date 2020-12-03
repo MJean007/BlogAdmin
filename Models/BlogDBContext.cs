@@ -44,7 +44,7 @@ namespace BlogAdmin.Models
                 entity.Property(e => e.title).HasColumnName("title");
                 entity.Property(e => e.postID).HasColumnName("postID");
                 entity.Property(e => e.publicationDate).HasColumnName("publicationDate");
-                entity.Property(e => e.publicationDate).HasColumnName("content");
+                entity.Property(e => e.content).HasColumnName("content");
 
             });
 

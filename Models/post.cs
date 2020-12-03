@@ -7,11 +7,11 @@ namespace BlogAdmin.Models
 {
     public class post
     {
-        public int postID { get; }
+        public int postID { get; set; }
         public string title { get; set; }
 
         public DateTime publicationDate { get; set; }
         public string content { get; set; }
-        public int categoryID { get; }
+        public int categoryID { get; set; }
     }
 }

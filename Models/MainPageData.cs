@@ -27,6 +27,13 @@ namespace BlogAdmin.Controllers
             return liste;
         }
 
+        private List<post> getPosts()
+        {
+            List<post> liste = new List<post>();
+            liste = _context.post.ToList();
+            liste = liste.OrderBy(l => l.title).ToList();
+            return liste;
+        }
 
     }
 }

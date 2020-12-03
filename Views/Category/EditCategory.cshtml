@@ -17,6 +17,7 @@
             </div>
             <div class="col-xs-6">
                 @Html.TextBoxFor(model => model.title)
+                @Html.HiddenFor(model => model.categoryID, new { id="hiddenCatID"})
             </div>
         </div>
         <div class="row">

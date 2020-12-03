@@ -67,6 +67,7 @@ namespace BlogAdmin.Controllers
         public async Task<IActionResult> SaveCategory(Category model)
         {
             int id = 0;
+
             try
             {
                 Task<int> task = Task.Run(() =>
@@ -77,12 +78,10 @@ namespace BlogAdmin.Controllers
                     {
                     // check to make sure this category does not already exist
                     cat = _context.Category.Where(t => t.categoryID == model.categoryID).FirstOrDefault();
-                    // if the category does not exist, create it.
+                    // if the category doe exist, modify it.
                     if (cat != null)
                         {
-                            cat = new Category();
                             cat.title = model.title;
-                            _context.Category.Add(cat);
                             _context.SaveChanges();
                         }
 

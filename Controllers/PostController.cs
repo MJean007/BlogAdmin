@@ -28,9 +28,9 @@ namespace BlogAdmin.Controllers
         }
 
 
-        public IActionResult Edit(Category model)
+        public IActionResult Edit(post model)
         {
-            
+
             ViewBag.ListOfCategories = context.Category.ToList().OrderBy(l => l.title);
             return View("EditPost", model);
         }
@@ -97,5 +97,46 @@ namespace BlogAdmin.Controllers
             return RedirectToAction("Home", "Home");
         }
 
+        [HttpPost]
+        public async Task<IActionResult> SavePost(post model)
+        {
+            int id = 0;
+            int catID = 0;
+            int.TryParse(Request.Form["listCategories"], out catID);
+            try
+            {
+                Task<int> task = Task.Run(() =>
+                {
+                    BlogDBContext _context = new BlogDBContext();
+                    post _post = null;
+                    if (_context != null)
+                    {
+                        // check to make sure this Post does not already exist
+                        _post = _context.post.Where(t => t.postID == model.postID).FirstOrDefault();
+                        // if the Post doe exist, modify it.
+                        if (_post != null)
+                        {
+                            _post.title = model.title;
+                            _post.categoryID = catID;
+                            _post.content = model.content;
+                            _post.publicationDate = model.publicationDate;
+                            _context.SaveChanges();
+                        }
+
+                    }
+                    // return the id of the Post that was created
+                    return _context.post.Where(t => t.title == model.title).Select(c => c.postID).FirstOrDefault();
+                }
+                );
+                // get the id the new Post from  the task
+                id = await task;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(string.Format("Error: {0}", ex.Message));
+            }
+
+            return RedirectToAction("Home", "Home");
+        }
     }
 }

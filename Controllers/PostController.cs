@@ -93,7 +93,7 @@ namespace BlogAdmin.Controllers
                 Console.WriteLine(string.Format("Error: {0}", ex.Message));
             }
 
-            //return View("~/Views/Home/Home.cshtml");
+            //return RedirectToAction("Home", "Home");
             return RedirectToAction("Home", "Home");
         }
 

@@ -60,7 +60,7 @@ namespace BlogAdmin.Controllers
                 Console.WriteLine(string.Format("Error: {0}", ex.Message));
             }
 
-            return View("~/Views/Home/Home.cshtml");
+            return RedirectToAction("Home", "Home");
         }
 
         [HttpPost]
@@ -99,7 +99,7 @@ namespace BlogAdmin.Controllers
                 Console.WriteLine(string.Format("Error: {0}", ex.Message));
             }
 
-            return View("~/Views/Home/Home.cshtml");
+            return RedirectToAction("Home", "Home");
         }
     }
 }

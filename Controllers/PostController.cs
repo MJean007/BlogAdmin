@@ -40,7 +40,7 @@ namespace BlogAdmin.Controllers
 
             return ok;
         }
-
+        [HttpPost]
         public async Task<IActionResult> Add(Models.post model)
         {
             if (!ValidatePage())
@@ -48,6 +48,10 @@ namespace BlogAdmin.Controllers
                 return null;
             }
             int id = 0;
+            int catID = 0;
+
+            int.TryParse(Request.Form["listCategories"], out catID);
+            //string strCatID = Request["listCategories"];
             try
             {
                 Task<int> task = Task.Run(() =>
@@ -64,7 +68,7 @@ namespace BlogAdmin.Controllers
                         {
                             _post = new post();
                             _post.title = model.title;
-                            _post.categoryID = model.categoryID;
+                            _post.categoryID = catID;
                             _post.publicationDate = DateTime.Now;
                             _post.content = model.content;
                             _context.post.Add(_post);
@@ -89,7 +93,8 @@ namespace BlogAdmin.Controllers
                 Console.WriteLine(string.Format("Error: {0}", ex.Message));
             }
 
-            return View("~/Views/Home/Home.cshtml");
+            //return View("~/Views/Home/Home.cshtml");
+            return RedirectToAction("Home", "Home");
         }
 
     }

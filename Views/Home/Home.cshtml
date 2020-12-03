@@ -34,7 +34,6 @@
             <div class="col-xs-10">
                 <a href="@Url.Action("Edit", "Category" , item)">@item.title</a>
              </div>
-
         </div>       
     }
 
@@ -48,17 +47,16 @@
                 <input type="button" value="Add" class="btn btn-primary" onclick="location.href='@Url.Action("Index", "Post")'"></>
             </div>
         </div>
-        <div class="row">
+
             @foreach (var item in Model.ListOfPosts)
             {
                 <div class="row">
                     <div class="col-xs-10">
                         <a href="@Url.Action("Edit", "Post" , item)">@item.title</a>
                     </div>
-
                 </div>
             }
-        </div>
+    
     </div>
 
 

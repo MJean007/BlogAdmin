@@ -15,7 +15,7 @@ namespace BlogAdmin.Controllers
         public  MainPageData()
         {
             ListOfCategories = getCategories();
-            ListOfPosts = new List<post>();
+            ListOfPosts = getPosts();
         }
 
         private List<Category> getCategories()

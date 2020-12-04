@@ -6,22 +6,25 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using BlogAdmin.Models;
+using System.Diagnostics.Eventing.Reader;
+using Microsoft.Extensions.Configuration;
+
 
 namespace BlogAdmin.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private string webApiServer = "";
+        public HomeController(IConfiguration configuration)
         {
-            _logger = logger;
+            webApiServer = configuration["WebApiServer"];
         }
 
         public IActionResult Home()
         {
 
-            var model = new MainPageData();
+            var model = new MainPageData(webApiServer);
 
             return View(model);
         }

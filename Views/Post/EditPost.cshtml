@@ -3,7 +3,7 @@
 <h3>Edit Post</h3>
 
 <hr>
-@using (Html.BeginForm("Edit", "Post", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("SavePost", "Post", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
 
     <div class="row">
@@ -11,7 +11,9 @@
             <p>Title</p>
         </div>
         <div class="col-sm-8 rowLabelHeader">
-            @Html.TextBoxFor(model => model.title)
+            @Html.TextBoxFor(model => model.title, new { @autofocus = "autofocus" })
+
+            @Html.HiddenFor(model => model.postID)
         </div>
     </div>
 
@@ -20,7 +22,7 @@
             <p>Category:</p>
         </div>
         <div class="col-sm-8 rowLabelHeader">
-            @Html.DropDownList("listCategories", new SelectList(ViewBag.ListOfCategories, "categoryID", "title"))
+            @Html.DropDownList("listCategories", new SelectList(ViewBag.ListOfCategories, "categoryID", "title", Model.categoryID.ToString()))
         </div>
     </div>
     <div class="row">
@@ -28,7 +30,7 @@
             Publication Date
         </div>
         <div class="col-sm-8 rowLabelHeader">
-            @Html.TextBoxFor(model => model.publicationDate)
+            <input type="Text" autofocus="autofocus" value="@ViewBag.PubDate"  id="PubliDate" name="PubliDate" />
         </div>
     </div>
 

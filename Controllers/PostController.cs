@@ -4,10 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BlogAdmin.Models;
-using System.Net.Http;
 using System.Configuration;
-using BlogAdmin.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Configuration;
+using System.Net.Http;
 
 namespace BlogAdmin.Controllers
 {
@@ -15,15 +15,21 @@ namespace BlogAdmin.Controllers
     public class PostController : Controller
     {
         private BlogDBContext context = new BlogDBContext();
+
+        private string webApiServer = "";
+
+        public PostController(IConfiguration configuration)
+        {
+            webApiServer = configuration["WebApiServer"];
+        }
+
         public IActionResult Index()
         {
             //post model = new post();
-            //var liste = new SelectList(context.Category.OrderBy(n => n.title), "categoryID", "title", model.categoryID);
             List<Category> liste = new List<Category>();
             liste.Add(new Category(0, "Select"));
             liste.AddRange(context.Category.OrderBy(n => n.title).ToList());
             ViewBag.ListOfCategories = liste;
-            //ViewBag.ListOfCategories = context.Category.OrderBy(n => n.title).ToList();
             return View("AddPost");
         }
 
@@ -32,6 +38,7 @@ namespace BlogAdmin.Controllers
         {
 
             ViewBag.ListOfCategories = context.Category.ToList().OrderBy(l => l.title);
+            ViewBag.PubDate = string.Format("{0}-{1:00}-{2:00}", model.publicationDate.Year, model.publicationDate.Month, model.publicationDate.Day);
             return View("EditPost", model);
         }
         private bool ValidatePage()
@@ -43,15 +50,17 @@ namespace BlogAdmin.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(Models.post model)
         {
+
             if (!ValidatePage())
             {
                 return null;
-            }
+            } 
+            DateTime pubDate = DateTime.MinValue;
             int id = 0;
             int catID = 0;
-
+            DateTime.TryParse(Request.Form["PubliDate"], out pubDate);
             int.TryParse(Request.Form["listCategories"], out catID);
-            //string strCatID = Request["listCategories"];
+ 
             try
             {
                 Task<int> task = Task.Run(() =>
@@ -69,7 +78,7 @@ namespace BlogAdmin.Controllers
                             _post = new post();
                             _post.title = model.title;
                             _post.categoryID = catID;
-                            _post.publicationDate = DateTime.Now;
+                            _post.publicationDate = pubDate;
                             _post.content = model.content;
                             _context.post.Add(_post);
                             _context.SaveChanges();
@@ -102,7 +111,9 @@ namespace BlogAdmin.Controllers
         {
             int id = 0;
             int catID = 0;
+            DateTime pubDate = DateTime.MinValue;
             int.TryParse(Request.Form["listCategories"], out catID);
+            DateTime.TryParse(Request.Form["PubliDate"], out pubDate);
             try
             {
                 Task<int> task = Task.Run(() =>
@@ -119,7 +130,7 @@ namespace BlogAdmin.Controllers
                             _post.title = model.title;
                             _post.categoryID = catID;
                             _post.content = model.content;
-                            _post.publicationDate = model.publicationDate;
+                            _post.publicationDate = pubDate;
                             _context.SaveChanges();
                         }
 

@@ -6,12 +6,23 @@ using Microsoft.AspNetCore.Mvc;
 using BlogAdmin.Models;
 using System.Net.Http;
 using System.Configuration;
+using Microsoft.Extensions.Configuration;
 
 namespace BlogAdmin.Controllers
 {
     public class CategoryController : Controller
     {
-        private string webApiServer = ""; // configuration.GetSection("WebApiServer");
+
+        private string webApiServer = ""; 
+
+        public CategoryController(IConfiguration configuration)
+        {
+            // Use IConfiguration instance
+            webApiServer= configuration["WebApiServer"];
+        }
+
+
+
         public IActionResult Index()
         {
             return View("AddCategory");
@@ -76,18 +87,18 @@ namespace BlogAdmin.Controllers
                     Category cat = null;
                     if (_context != null)
                     {
-                    // check to make sure this category does not already exist
-                    cat = _context.Category.Where(t => t.categoryID == model.categoryID).FirstOrDefault();
-                    // if the category doe exist, modify it.
-                    if (cat != null)
+                        // check to make sure this category does not already exist
+                        cat = _context.Category.Where(t => t.categoryID == model.categoryID).FirstOrDefault();
+                        // if the category doe exist, modify it.
+                        if (cat != null)
                         {
                             cat.title = model.title;
                             _context.SaveChanges();
                         }
 
                     }
-                // return the id of the category that was created
-                return _context.Category.Where(t => t.title == model.title).Select(c => c.categoryID).FirstOrDefault();
+                    // return the id of the category that was created
+                    return _context.Category.Where(t => t.title == model.title).Select(c => c.categoryID).FirstOrDefault();
                 }
                 );
                 // get the id the new category from  the task

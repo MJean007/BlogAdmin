@@ -16,7 +16,7 @@
                 <h3>Title</h3>
             </div>
             <div class="col-xs-6">
-                @Html.TextBoxFor(model => model.title)
+                @Html.TextBoxFor(model => model.title, new { @autofocus = "autofocus" })
                 @Html.HiddenFor(model => model.categoryID, new { id="hiddenCatID"})
             </div>
         </div>

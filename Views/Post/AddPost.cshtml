@@ -11,7 +11,7 @@
             <p>Title</p>
         </div>
         <div class="col-sm-8 rowLabelHeader">
-            @Html.TextBoxFor(model => model.title)
+            @Html.TextBoxFor(model => model.title,  new { @autofocus = "autofocus" })
         </div>
     </div>
 
@@ -28,7 +28,7 @@
             Publication Date
         </div>
         <div class="col-sm-8 rowLabelHeader">
-            @Html.TextBoxFor(model => model.publicationDate)
+            <input type="Text" autofocus="autofocus" value="@ViewBag.PubDate" id="PubliDate" name="PubliDate" />
         </div>
     </div>
 

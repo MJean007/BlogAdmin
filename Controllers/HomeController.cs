@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 using BlogAdmin.Models;
 using System.Diagnostics.Eventing.Reader;
 using Microsoft.Extensions.Configuration;
-
+using System.Net.Http;
 
 namespace BlogAdmin.Controllers
 {
@@ -16,16 +16,19 @@ namespace BlogAdmin.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private string webApiServer = "";
-        public HomeController(IConfiguration configuration)
+        private readonly HttpClient client = null;
+        private IConfiguration _config = null;
+        public HomeController(HttpClient client, IConfiguration configuration)
         {
             webApiServer = configuration["WebApiServer"];
+            this.client = client;
+            _config = configuration;
         }
 
-        public IActionResult Home()
+        public async Task<IActionResult> Home()
         {
-
-            var model = new MainPageData(webApiServer);
-
+            var _model = new MainPageData(client, _config);
+            var model = await MainPageData.CreateAsync();
             return View(model);
         }
 

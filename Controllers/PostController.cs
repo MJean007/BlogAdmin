@@ -8,6 +8,7 @@ using System.Configuration;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using System.Net.Http;
+using System.Text.Json;
 
 namespace BlogAdmin.Controllers
 {
@@ -18,7 +19,7 @@ namespace BlogAdmin.Controllers
 
         private string webApiServer = "";
 
-        public PostController(IConfiguration configuration)
+        public PostController(HttpClient client, IConfiguration configuration)
         {
             webApiServer = configuration["WebApiServer"];
         }

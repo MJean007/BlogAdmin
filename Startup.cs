@@ -9,15 +9,18 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
-
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace BlogAdmin
 {
     public class Startup
     {
+        //IConfiguration _configuration;
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            //_configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -30,6 +33,15 @@ namespace BlogAdmin
             services.AddControllersWithViews();
             services.AddDbContext<Models.BlogDBContext>(item => item.UseSqlServer(connectionString));
             services.AddSingleton<IConfiguration>(Configuration);
+            
+            // setup the client to the web api
+            HttpClient client = new HttpClient();
+            //string baseUrl = _configuration["WebApiServer"];
+            string baseUrl = Configuration["WebApiServer"];
+            client.BaseAddress = new Uri(baseUrl);
+            var contentType = new MediaTypeWithQualityHeaderValue("application/json");
+            client.DefaultRequestHeaders.Accept.Add(contentType);
+            services.AddSingleton<HttpClient>(client);
 
         }
 

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using System.Text.Json;
 using System.Drawing.Text;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 //using Newtonsoft.Json;
 
 namespace BlogAdmin.Controllers
@@ -22,66 +23,69 @@ namespace BlogAdmin.Controllers
 
         private string webApiServer = "";
 
+        private readonly HttpClient client = null;
+        private IConfiguration _config = null;
 
-        public MainPageData(string _webApiServer)
-        {
-            webApiServer = _webApiServer;
-            ListOfCategories = getCategories();
-            ListOfPosts = getPosts();
+
+        private MainPageData()
+        { 
         }
+
+        public  MainPageData(HttpClient client, IConfiguration configuration)
+        {
+            _config = configuration;
+            webApiServer = configuration["WebApiServer"];
+            this.client = client;
+            //ListOfCategories = getCategories();
+            //ListOfPosts = getPosts();
+        }
+
+        private async Task<MainPageData> InitializeAsync()
+        {
+            ListOfCategories = await getCategoriesFromWebApi();
+            ListOfPosts = getPosts();
+            return this;
+        }
+
+        public static  Task<MainPageData> CreateAsync()
+        {
+            var result = new MainPageData();
+            return result.InitializeAsync();
+        }
+
 
         private List<Category> getCategories()
         {
             //Task val = getCategoriesFromWebApi();
-
+            //Task.Run(() => Console.WriteLine("ok doke"));
             List<Category> liste = new List<Category>();
+
+            //Task.Run((List<Category>) =>
+            //{ 
+            //    liste = await getCategoriesFromWebApi()
+
+
+            //});
+
             liste = _context.Category.ToList();
             liste = liste.OrderBy(l => l.title).ToList();
 
             return liste;
         }
 
-        private async Task<IActionResult> getCategoriesFromWebApi()
+        private async Task<List<Category>> getCategoriesFromWebApi()
         {
             List<Category> liste = new List<Category>();
 
             try
             {
-                using (HttpClient client = new HttpClient())
+                HttpResponseMessage response = await client.GetAsync(webApiServer + "category");
+                string stringData = await response.Content.ReadAsStringAsync();
+                var options = new JsonSerializerOptions
                 {
-                    StringContent content = new StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(liste), Encoding.UTF8, "application/json");
-                    //List<Category> content = new StringContent(JsonConvert.SerializeObject(liste), Encoding.UTF8, "application/json");
-
-                    //byte[] jsonUtf8Bytes;
-                    //var options = new JsonSerializerOptions;
-                    //{
-                    //    WriteIndented = true
-                    //};
-                    //jsonUtf8Bytes = JsonSerializer.SerializeToUtf8Bytes(liste, options);
-                    //string content = JsonSerializer.Serialize(liste);
-                    string endpoint = webApiServer + "Category";
-                    
-                    using (var Response = await client.GetAsync(endpoint))
-                    {
-                        if (Response.StatusCode == System.Net.HttpStatusCode.OK)
-                        {
-                            //object TempData = null;
-                            var item2do = Newtonsoft.Json.JsonConvert.SerializeObject(content);
-                            //return RedirectToAction("Index");
-                            liste = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Category>>(Convert.ToString(item2do));
-                        }
-                        else if (Response.StatusCode == System.Net.HttpStatusCode.Conflict)
-                        {
-                            //ModelState.Clear();
-                            //ModelState.AddModelError("Username", "Username Already Exist");
-                            //return View();
-                        }
-                        else
-                        {
-                            //return View();
-                        }
-                    }
-                }
+                    PropertyNameCaseInsensitive = true
+                };
+                liste = JsonSerializer.Deserialize<List<Category>>(stringData, options);
             }
             catch (Exception ex)
             {
@@ -89,7 +93,7 @@ namespace BlogAdmin.Controllers
             }
 
             //return liste;
-            return null;
+            return liste;
         }
 
 
